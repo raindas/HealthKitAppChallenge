@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @State var isSessionScreenShowing:Bool = false
+    @State var isPreferenceViewShowing:Bool = false
     
     var body: some View {
         NavigationView {
@@ -62,14 +63,20 @@ struct ContentView: View {
                         HStack{
                             Image(systemName: "speaker.fill")
                             Spacer()
-                            Image(systemName: "slider.vertical.3")
+                            Button(action: {
+                                isPreferenceViewShowing.toggle()
+                            }, label: {
+                                Image(systemName: "slider.vertical.3")
+                            })
                         }
                         .foregroundColor(Color.white)
                         .font(.system(size: 35))
                         .padding(.horizontal, 20.0)
                         .padding(.bottom, 30.0)
                     }
-                }
+                }.fullScreenCover(isPresented: $isPreferenceViewShowing, content: {
+                    PreferencesView(isPreferencesViewShowing: $isPreferenceViewShowing).navigationBarHidden(true)
+                })
             }.ignoresSafeArea()
         }
     }
